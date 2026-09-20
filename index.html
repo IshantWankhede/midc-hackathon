@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIDC Grand Challenge 2026 - Innovation & Strategy Hub</title>
+  <meta name="description" content="Interactive exploration of MIDC Grand Challenge 2026 problem tracks, non-tech participation pathways, prize details, and pitch builder.">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="#" class="logo-brand">
+        <span>🏢 MIDC Innovation Hub</span>
+        <span class="logo-badge">2026</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#tracks">Problem Tracks</a></li>
+        <li><a href="#track-finder">Track Finder</a></li>
+        <li><a href="#pitch-studio">Pitch Studio</a></li>
+        <li><a href="#dictionary">Jargon Buster</a></li>
+      </ul>
+      <a href="https://midc.maharashtra.gov.in" target="_blank" rel="noopener" class="btn-cta">
+        Apply on MIDC Portal &rarr;
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-pill">
+          <span>🏆 Total Prize Pool ₹2 Crore</span>
+          <span>•</span>
+          <span id="countdown-display">Loading timer...</span>
+        </div>
+        <h1 class="hero-title">
+          Solve Real Industrial Challenges for <span>Maharashtra</span>
+        </h1>
+        <p class="hero-desc">
+          Everything you and your team need to know about the <strong>MIDC Grand Challenge 2026</strong>. 
+          Designed for both tech innovators and non-tech strategists to build winning solutions together!
+        </p>
+        <div class="hero-actions">
+          <a href="#track-finder" class="btn-cta">⚡ Find Your Best Track (Quiz)</a>
+          <a href="#tracks" class="btn-secondary">Explore 5 Problem Tracks</a>
+        </div>
+      </div>
+      <div class="hero-image-wrapper">
+        <img src="assets/hero_banner.jpg" alt="MIDC Smart Industrial Infrastructure Illustration">
+      </div>
+    </div>
+  </header>
+
+  <!-- Key Metrics Bar -->
+  <section class="container">
+    <div class="metrics-bar">
+      <div class="metric-card">
+        <div class="metric-val">₹ 2 Crore</div>
+        <div class="metric-label">Total Prize Pool & Pilot Funding</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">5 Tracks</div>
+        <div class="metric-label">Roads, Carbon, Water, Energy, AI</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">30th Sept 2026</div>
+        <div class="metric-label">Application Submission Deadline</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">TRL 4+</div>
+        <div class="metric-label">Ready-to-Implement Solutions</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Non-Tech Welcome Banner -->
+  <section class="container">
+    <div class="nontech-banner">
+      <div class="nontech-content">
+        <h3>💡 Not a coder? You are vital to winning!</h3>
+        <p>
+          Hackathons aren’t just about code—MIDC looks for real deployment, ROI, business strategy, and field operations. Non-tech partners bring business models, marketing pitches, environmental insights, and UI design that make proposals win!
+        </p>
+      </div>
+      <a href="#track-finder" class="btn-cta" style="white-space:nowrap;">Match My Skills &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Interactive Quiz Wizard: Non-Tech Track Finder -->
+  <section id="track-finder" class="container" style="padding-top:40px;">
+    <div class="section-header">
+      <span class="section-tag">Interactive Matchmaker</span>
+      <h2 class="section-title">Non-Tech Friend Track Finder</h2>
+      <p class="section-desc">Answer 2 simple questions to find the perfect track and role tailored for your skills!</p>
+    </div>
+
+    <div class="wizard-card">
+      <!-- Step 1 -->
+      <div id="wizard-step-1" class="wizard-step active">
+        <h3 style="font-family:var(--font-heading); color:#fff; font-size:1.4rem; margin-bottom:8px;">Step 1: What is your primary skill or background?</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem;">Select what you enjoy doing most:</p>
+        
+        <div id="quiz-options-1" class="options-grid"></div>
+
+        <div style="text-align:right; margin-top:20px;">
+          <button id="btn-next-step" class="btn-cta" style="display:none;" onclick="goToStep(2)">Next Question &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="wizard-step-2" class="wizard-step">
+        <h3 style="font-family:var(--font-heading); color:#fff; font-size:1.4rem; margin-bottom:8px;">Step 2: Which real-world problem excites you most?</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem;">Pick an area you want to transform:</p>
+        
+        <div id="quiz-options-2" class="options-grid"></div>
+
+        <div style="display:flex; justify-content:space-between; margin-top:20px;">
+          <button class="btn-secondary" onclick="goToStep(1)">&larr; Back</button>
+          <button id="btn-finish-quiz" class="btn-cta" style="display:none;" onclick="finishQuiz()">See My Recommendation 🎉</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Result -->
+      <div id="wizard-step-3" class="wizard-step">
+        <div id="quiz-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Tracks Section -->
+  <section id="tracks" class="container" style="padding-top:40px;">
+    <div class="section-header">
+      <span class="section-tag">Deep Dive</span>
+      <h2 class="section-title">The 5 MIDC Problem Tracks</h2>
+      <p class="section-desc">Click any category tab to filter problem statements, team roles, and proposed solutions.</p>
+    </div>
+
+    <div class="track-tabs">
+      <button class="tab-btn active" onclick="filterTracks('all', this)">All 5 Tracks</button>
+      <button class="tab-btn" onclick="filterTracks('potholes', this)">🛣️ Potholes & Roads</button>
+      <button class="tab-btn" onclick="filterTracks('carbon', this)">🌿 Carbon Capture</button>
+      <button class="tab-btn" onclick="filterTracks('water', this)">💧 Effluent & Water</button>
+      <button class="tab-btn" onclick="filterTracks('energy', this)">⚡ Green Energy</button>
+      <button class="tab-btn" onclick="filterTracks('ai-parks', this)">🤖 AI & Smart Parks</button>
+    </div>
+
+    <div id="tracks-container" class="track-grid">
+      <!-- Dynamically generated by app.js -->
+    </div>
+  </section>
+
+  <!-- Pitch Studio Generator -->
+  <section id="pitch-studio" class="container" style="padding-top:60px;">
+    <div class="section-header">
+      <span class="section-tag">Idea Generator</span>
+      <h2 class="section-title">Interactive Pitch Blueprint Studio</h2>
+      <p class="section-desc">Formulate a structured hackathon proposal draft in seconds!</p>
+    </div>
+
+    <div class="studio-box">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="studio-track">Target Track</label>
+          <select id="studio-track" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <label for="studio-role">Your Role in Team</label>
+          <select id="studio-role" class="form-control">
+            <option value="Business & Strategy Lead">Business & Strategy Lead</option>
+            <option value="Product Designer & Pitch Storyteller">Product Designer & Pitch Storyteller</option>
+            <option value="Sustainability & Operations Specialist">Sustainability & Operations Specialist</option>
+            <option value="Full-Stack Technical Lead">Full-Stack Technical Lead</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="studio-name">Project / Team Name</label>
+          <input type="text" id="studio-name" class="form-control" placeholder="e.g. EcoPave MIDC">
+        </div>
+        <div class="form-group">
+          <label for="studio-note">Key Advantage / Note</label>
+          <input type="text" id="studio-note" class="form-control" placeholder="e.g. Low cost, fast deployment in monsoons">
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn-cta" onclick="generatePitch()">✨ Generate Pitch Blueprint</button>
+      </div>
+
+      <div id="pitch-result-box" style="display:none;" class="pitch-output">
+        <button class="copy-btn" onclick="copyPitchText()">📋 Copy Blueprint</button>
+        <h4>📄 Your Customized Pitch Blueprint</h4>
+        <pre id="pitch-output-text" style="white-space:pre-wrap; font-family:var(--font-code); font-size:0.88rem; color:#d1d5db;"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Non-Tech Jargon Buster / Dictionary -->
+  <section id="dictionary" class="container" style="padding-top:40px;">
+    <div class="section-header">
+      <span class="section-tag">Cheat Sheet</span>
+      <h2 class="section-title">Non-Tech Jargon Buster</h2>
+      <p class="section-desc">Quick definitions of hackathon terms so you sound like an industry expert!</p>
+    </div>
+
+    <div class="dict-grid">
+      <div class="dict-card">
+        <div class="dict-term">TRL 4+ (Technology Readiness Level)</div>
+        <div class="dict-def">Means your solution is past theoretical idea phase and has a working lab/pilot prototype validated in real conditions.</div>
+      </div>
+      <div class="dict-card">
+        <div class="dict-term">Effluent & CETP</div>
+        <div class="dict-def">Effluent is industrial liquid waste. CETP stands for Common Effluent Treatment Plant where waste water from multiple factories is cleaned together.</div>
+      </div>
+      <div class="dict-card">
+        <div class="dict-term">ZLD (Zero Liquid Discharge)</div>
+        <div class="dict-def">A wastewater treatment process where all water is purified and recycled back into the factory, leaving zero liquid waste to pollute drains.</div>
+      </div>
+      <div class="dict-card">
+        <div class="dict-term">P2P Solar Microgrid</div>
+        <div class="dict-def">A localized power network allowing neighboring factories to sell excess solar energy directly to each other without relying solely on the state grid.</div>
+      </div>
+      <div class="dict-card">
+        <div class="dict-term">Edge AI & Vision AI</div>
+        <div class="dict-def">Running artificial intelligence models directly on local cameras or hardware boxes (on the edge) without sending video data to slow cloud servers.</div>
+      </div>
+      <div class="dict-card">
+        <div class="dict-term">3D Digital Twin</div>
+        <div class="dict-def">A virtual 3D computer model of physical factories, pipelines, and roads that updates in real-time using live sensor data.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for Detailed Track View -->
+  <div id="track-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>MIDC Grand Challenge 2026 Exploration Hub</p>
+      <p style="margin-top:8px;">
+        Repository: <a href="https://github.com/IshantWankhede/midc-hackathon.git" target="_blank">github.com/IshantWankhede/midc-hackathon.git</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- JS Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
