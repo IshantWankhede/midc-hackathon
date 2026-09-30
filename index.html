@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Non-Tech Friend's Guide to MIDC Hackathon 2026</title>
-  <meta name="description" content="A friendly, interactive guide explaining what the MIDC Grand Challenge 2026 hackathon is, how non-tech team members win, and how we can team up for ₹2 Crore!">
+  <meta name="description" content="Interactive guide and ground reality GIS prototype sandbox for MIDC Grand Challenge 2026. Explore Nerul, Taloja, Dombivli drone mapping & fire department integration.">
   
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,12 +14,12 @@
   <nav class="navbar">
     <div class="container nav-content">
       <a href="#" class="logo-brand">
-        <span>👋 Hey Friend! Hackathon Guide</span>
+        <span>👋 Hey Friend! MIDC Hackathon Guide</span>
         <span class="logo-badge">₹2 Cr Challenge</span>
       </a>
       <ul class="nav-links">
         <li><a href="#what-is-it">What is a Hackathon?</a></li>
-        <li><a href="#why-you-matter">Why You Matter</a></li>
+        <li><a href="#gis-sandbox">GIS Prototype Sandbox</a></li>
         <li><a href="#tracks-eli5">5 Tracks (ELI5)</a></li>
         <li><a href="#superpower-quiz">Superpower Quiz</a></li>
         <li><a href="#co-studio">Build Idea Together</a></li>
@@ -43,13 +43,12 @@
           Hey Friend! Let’s Win <span>₹2 Crore</span> Together at the MIDC Hackathon! 🚀
         </h1>
         <p class="hero-desc">
-          Think hackathons are only for coders writing dark-screen code? <strong>Think again!</strong> 
-          Judges care just as much about real-world impact, presentation, design, and business strategy. 
-          Here is how your non-tech skills are our secret weapon to winning!
+          We are bringing a <strong>human touch + real ground surveys</strong> across Maharashtra industrial estates (Nerul, Taloja, Dombivli, Chakan). 
+          Explore drone imagery, GIS maps, fire department radar integration, and see why your non-tech skills are our winning secret weapon!
         </p>
         <div class="hero-actions">
-          <a href="#superpower-quiz" class="btn-cta">🌟 Find Your Secret Superpower</a>
-          <a href="#what-is-it" class="btn-secondary">What is a Hackathon?</a>
+          <a href="#gis-sandbox" class="btn-cta">🗺️ Explore Prototype GIS Sandbox</a>
+          <a href="#superpower-quiz" class="btn-secondary">🌟 Take Superpower Quiz</a>
         </div>
       </div>
       <div class="hero-image-box">
@@ -57,6 +56,44 @@
       </div>
     </div>
   </header>
+
+  <!-- Ground Reality GIS Sandbox Section -->
+  <section id="gis-sandbox" class="container" style="padding-top:40px;">
+    <div class="section-header">
+      <span class="section-tag">Ground Reality & Drone Audits</span>
+      <h2 class="section-title">Interactive GIS & Drone Survey Sandbox 🗺️</h2>
+      <p class="section-desc">
+        Click through live prototype simulations showing real Maharashtra industrial estate mappings (Nerul, Taloja, Dombivli) with drone imagery and fire station radar links!
+      </p>
+    </div>
+
+    <div class="sandbox-card">
+      <div class="sandbox-tabs">
+        <button class="sandbox-tab-btn active" onclick="switchSandboxTab('pothole', this)">🛣️ Nerul/Taloja Potholes</button>
+        <button class="sandbox-tab-btn" onclick="switchSandboxTab('fire', this)">🚨 Fire Dept & Kill Switch</button>
+        <button class="sandbox-tab-btn" onclick="switchSandboxTab('carbon', this)">🌿 Drone Smoke Compliance</button>
+        <button class="sandbox-tab-btn" onclick="switchSandboxTab('water', this)">💧 Taloja River Inspector</button>
+        <button class="sandbox-tab-btn" onclick="switchSandboxTab('solar', this)">⚡ Rooftop Solar % Audit</button>
+      </div>
+
+      <div id="sandbox-viewer-content" class="sandbox-viewer">
+        <div class="sandbox-media-wrapper">
+          <img src="assets/nerul_pothole_map.jpg" alt="Nerul MIDC Pothole AI Map">
+        </div>
+        <div class="sandbox-details">
+          <span class="sandbox-badge">📍 Nerul MIDC / Taloja MIDC Google Map View</span>
+          <h4>Nerul & Taloja MIDC Pothole AI Survey</h4>
+          
+          <ul class="sandbox-feature-list">
+            <li><span>🔹</span><div><strong>Google Map GIS Integration:</strong> Full spatial drone & satellite mapping of Nerul & Taloja industrial road corridors.</div></li>
+            <li><span>🔹</span><div><strong>AI Image Detection & Bounding Boxes:</strong> Auto-identifies potholes, classifies depth severity, and calculates repair material costs.</div></li>
+            <li><span>🔹</span><div><strong>Day vs Night Traffic Dispatcher:</strong> Recommends repair schedules based on peak truck traffic vs low foot-traffic hours to prevent industrial gridlock.</div></li>
+            <li><span>🔹</span><div><strong>Remediation Cost & Fix Timeline:</strong> Estimated repair time: 3.5 hours | Estimated Cost: ₹1,45,680 (using rapid cold-mix polymer).</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Section 1: What is a Hackathon? -->
   <section id="what-is-it" class="container" style="padding-top:40px;">
@@ -91,27 +128,6 @@
         <p class="card-body">
           We present a short 5-minute pitch to a panel of expert judges. Winning teams get cash prizes out of <strong>₹2 Crore</strong> and government work orders!
         </p>
-      </div>
-    </div>
-
-    <!-- Myth vs Fact Banner -->
-    <div style="margin-top:36px; background:rgba(139, 92, 246, 0.1); border:1px solid var(--accent-purple); border-radius:var(--radius-lg); padding:28px;">
-      <h3 style="font-family:var(--font-heading); color:#fff; font-size:1.4rem; margin-bottom:16px; text-align:center;">
-        🚫 Busting Common Hackathon Myths
-      </h3>
-      <div class="cards-grid-3">
-        <div class="myth-vs-fact">
-          <span class="myth-label">❌ Myth: "I need to know Python or Coding."</span>
-          <span class="fact-label">✅ Fact: 40% of judging criteria is based on business viability, slide deck storytelling, and operational impact!</span>
-        </div>
-        <div class="myth-vs-fact">
-          <span class="myth-label">❌ Myth: "It takes months of hard work."</span>
-          <span class="fact-label">✅ Fact: Hackathon proposals are short 5-minute slide decks and quick visual demos!</span>
-        </div>
-        <div class="myth-vs-fact">
-          <span class="myth-label">❌ Myth: "Is the ₹2 Crore prize real?"</span>
-          <span class="fact-label">✅ Fact: Yes! Supported directly by the Maharashtra State Government (MIDC).</span>
-        </div>
       </div>
     </div>
   </section>
@@ -167,8 +183,8 @@
   <section id="tracks-eli5" class="container" style="padding-top:60px;">
     <div class="section-header">
       <span class="section-tag">Simplified Domains</span>
-      <h2 class="section-title">The 5 Problem Tracks Explained Simply 🍦</h2>
-      <p class="section-desc">Here is what each track actually means in everyday plain English:</p>
+      <h2 class="section-title">The 5 Problem Tracks (Ground Surveyed) 🍦</h2>
+      <p class="section-desc">Here is what each track means with real Maharashtra ground surveys:</p>
     </div>
 
     <div id="eli5-tracks-grid" class="eli5-grid">
@@ -224,23 +240,23 @@
         <div class="quiz-options">
           <div class="quiz-opt-btn" onclick="answerQuiz(2, 'potholes', this)">
             <span class="quiz-opt-icon">🛣️</span>
-            <div class="quiz-opt-title">Fixing pothole-riddled roads</div>
+            <div class="quiz-opt-title">Nerul & Taloja Pothole Repairs</div>
           </div>
           <div class="quiz-opt-btn" onclick="answerQuiz(2, 'carbon', this)">
             <span class="quiz-opt-icon">🌿</span>
-            <div class="quiz-opt-title">Catching dirty chimney smoke</div>
+            <div class="quiz-opt-title">Thermal Drone Smoke Inspection</div>
           </div>
           <div class="quiz-opt-btn" onclick="answerQuiz(2, 'water', this)">
             <span class="quiz-opt-icon">💧</span>
-            <div class="quiz-opt-title">Recycling industrial toxic water</div>
+            <div class="quiz-opt-title">Taloja River Effluent Inspector</div>
           </div>
           <div class="quiz-opt-btn" onclick="answerQuiz(2, 'energy', this)">
             <span class="quiz-opt-icon">⚡</span>
-            <div class="quiz-opt-title">Trading cheap solar power</div>
+            <div class="quiz-opt-title">Factory Rooftop Solar % Audit</div>
           </div>
           <div class="quiz-opt-btn" onclick="answerQuiz(2, 'ai-parks', this)">
             <span class="quiz-opt-icon">🤖</span>
-            <div class="quiz-opt-title">Using AI cameras for safety & fires</div>
+            <div class="quiz-opt-title">Fire Dept Radar & Kill Switch</div>
           </div>
         </div>
 
@@ -286,7 +302,7 @@
         </div>
         <div class="form-field">
           <label for="co-idea-title">Project Name Idea</label>
-          <input type="text" id="co-idea-title" class="input-ctrl" placeholder="e.g. SmartPave Maharashtra">
+          <input type="text" id="co-idea-title" class="input-ctrl" placeholder="e.g. SmartPave Nerul">
         </div>
       </div>
 
@@ -315,7 +331,7 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>Made with ❤️ to explain the MIDC Grand Challenge 2026 to friends & future teammates!</p>
+      <p>Made with ❤️ incorporating ground survey insights for Nerul, Taloja, Dombivli & MIDC zones across Maharashtra!</p>
       <p style="margin-top:8px;">
         Repository: <a href="https://github.com/IshantWankhede/midc-hackathon.git" target="_blank">github.com/IshantWankhede/midc-hackathon.git</a>
       </p>

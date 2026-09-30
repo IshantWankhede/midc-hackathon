@@ -1,61 +1,118 @@
-// Friendly Hackathon Explainer & Collaboration Studio Logic
+// Friendly Hackathon Explainer & Prototype Sandbox Application Logic
 
-// ELI5 Tracks Data
+// Sandbox Demos Data (Incorporating Friend's Ground Reality Feedback)
+const sandboxDemos = {
+  pothole: {
+    title: 'Nerul & Taloja MIDC Pothole AI Survey',
+    locationBadge: '📍 Nerul MIDC / Taloja MIDC Google Map View',
+    image: 'assets/nerul_pothole_map.jpg',
+    features: [
+      '<strong>Google Map GIS Integration:</strong> Full spatial drone & satellite mapping of Nerul & Taloja industrial road corridors.',
+      '<strong>AI Image Detection & Bounding Boxes:</strong> Auto-identifies potholes, classifies depth severity, and calculates repair material costs.',
+      '<strong>Day vs Night Traffic Dispatcher:</strong> Recommends repair schedules based on peak truck traffic vs low foot-traffic hours to prevent industrial gridlock.',
+      '<strong>Remediation Cost & Fix Timeline:</strong> Estimated repair time: 3.5 hours | Estimated Cost: ₹1,45,680 (using rapid cold-mix polymer).'
+    ]
+  },
+  fire: {
+    title: 'AI Safety & Fire Sentinel Emergency Radar',
+    locationBadge: '🚨 Direct Local Fire Department Integration',
+    image: 'assets/fire_sentinel_map.jpg',
+    features: [
+      '<strong>Direct Fire Station Alerting:</strong> Camera feeds automatically push real-time alerts to the local fire department radar upon detecting fire or chemical smoke.',
+      '<strong>Chemical Inventory & PPE Dispatch:</strong> Instantly displays factory chemical list (e.g. Toluene, Hydrochloric Acid) and exact PPE required (Level A HAZMAT, SCBA).',
+      '<strong>Traffic Clearance Alert:</strong> Automatically alerts neighboring factories when fire trucks leave, clearing emergency route pathways.',
+      '<strong>Manual Override & Kill Switch:</strong> Allows human operators to override AI tools with mandatory logging of WHO killed it and WHY.'
+    ]
+  },
+  carbon: {
+    title: 'Thermal Drone Chimney Emission Audit',
+    locationBadge: '📍 Dombivli & Rabale MIDC Smoke Stacks',
+    image: 'assets/hero_banner.jpg',
+    features: [
+      '<strong>Thermal & RGB Drone Inspection:</strong> Scans factory stacks for illegal off-hour venting and filter bypasses.',
+      '<strong>Regulatory Compliance Timing:</strong> Verifies emission timestamps against permitted government schedules (incorporating Ajinkya’s compliance rules).',
+      '<strong>Filter Activity Verification:</strong> Detects whether advanced scrubbers are active or disabled during peak factory shifts.',
+      '<strong>Automated ESG Flagging:</strong> Directly updates factory compliance ratings on the MIDC central portal.'
+    ]
+  },
+  water: {
+    title: 'Taloja River & Industrial Lake Water Inspector',
+    locationBadge: '📍 Taloja River & Chemical Drain Basins',
+    image: 'assets/friends_collaboration.jpg',
+    features: [
+      '<strong>Spectral Pollution Heatmap:</strong> Color-codes industrial drain networks comparing heavily polluted chemical zones vs safe zones.',
+      '<strong>Automated MIDC Notice Generator:</strong> One-click generation of formal MIDC inspection notices sent directly to non-compliant factory owners.',
+      '<strong>Biological Filter Shield:</strong> Alerts central CETPs 40 minutes before toxic effluent reaches biological treatment beds.'
+    ]
+  },
+  solar: {
+    title: 'Drone Rooftop Solar Coverage & Energy Audit',
+    locationBadge: '📍 Chakan & Pimpri Industrial Estates',
+    image: 'assets/hero_banner.jpg',
+    features: [
+      '<strong>Drone Rooftop Coverage Audit:</strong> Quantifies the exact % of factory roofs equipped with solar panels across industrial blocks.',
+      '<strong>Phase-1 Adoption Roadmap:</strong> Recommends starting solar integration for common area lighting, fans, and basic loads before full factory scale.',
+      '<strong>Quantified CO2 Reduction Data:</strong> Uses theoretical energy datasets to project annual electricity savings (₹12.4 Lakhs/yr) and carbon offset.'
+    ]
+  }
+};
+
+// ELI5 Tracks Data (Updated with Ground Reality Details)
 const eli5Tracks = [
   {
     id: 'potholes',
-    title: 'Pothole & Road Patrol',
+    title: 'Pothole & Road Patrol (Nerul & Taloja)',
     icon: '🛣️',
-    eli5Summary: 'Detecting and fixing broken industrial roads before heavy trucks break their axles or get stuck in monsoon mud.',
-    whyItMatters: 'Industrial estates in Maharashtra carry heavy trucks 24/7. When roads get potholes, trucks slow down, break down, or spill chemical cargo.',
-    whatTechDoes: 'Mounts camera pods on trucks/buses to auto-detect potholes using computer vision AI.',
-    whatYouDo: 'Design the road repair dispatch strategy, calculate cost savings for truck owners, and pitch how MIDC can manage maintenance contractors.',
-    techRoles: ['CV/AI Developer', 'Mobile App Dev'],
-    nonTechRoles: ['Road Logistics Lead', 'Pitch Storyteller', 'Cost & Savings Analyst']
+    eli5Summary: 'Detecting and fixing broken industrial roads in Nerul & Taloja MIDC using Google Map GIS views, cost calculators, and smart day/night scheduling.',
+    whyItMatters: 'Heavy container trucks destroy Nerul & Taloja roads. Fixing them at night based on foot/truck traffic prevents expensive industrial traffic jams.',
+    whatTechDoes: 'Maps roads with drone/camera imagery, auto-detects pothole depth, and estimates repair materials.',
+    whatYouDo: 'Design the day/night repair schedule based on foot-traffic data, calculate fixing timelines (e.g. 4-hour fix), and present the ROI to MIDC.',
+    techRoles: ['CV/AI Developer', 'GIS Developer'],
+    nonTechRoles: ['Traffic & Logistics Lead', 'Cost & Timeline Analyst', 'Pitch Lead']
   },
   {
     id: 'carbon',
-    title: 'Carbon & Smoke Police',
+    title: 'Carbon & Smoke Police (Drone Audits)',
     icon: '🌿',
-    eli5Summary: 'Tracking dirty factory chimney smoke in real-time and capturing carbon emissions before they ruin the air.',
-    whyItMatters: 'Hundreds of chemical and metal factories have chimney stacks. Some release dirty gases at night when no one is watching.',
-    whatTechDoes: 'Installs small solar-powered air sensors near chimneys to send real-time air quality data to a central cloud dashboard.',
-    whatYouDo: 'Design the ESG sustainability report, pitch how factory owners get tax incentives for going green, and present the environmental impact.',
-    techRoles: ['IoT Firmware Dev', 'Data Analyst'],
-    nonTechRoles: ['Sustainability Specialist', 'ESG Strategy Lead', 'Presentation Master']
+    eli5Summary: 'Thermal drone surveillance checking factory chimneys for illegal off-hour smoke release and verifying filter compliance (Ajinkya’s rule set).',
+    whyItMatters: 'Factories sometimes release dirty smoke at night. Thermal drones spot un-filtered emissions and check compliance timestamps.',
+    whatTechDoes: 'Processes drone thermal images to measure stack temperature and gas opacity.',
+    whatYouDo: 'Create the regulatory compliance checklist, design ESG certificates for compliant factories, and pitch the environmental benefits.',
+    techRoles: ['Drone Imaging Dev', 'IoT Specialist'],
+    nonTechRoles: ['Regulatory Compliance Specialist', 'ESG Pitch Storyteller']
   },
   {
     id: 'water',
-    title: 'Water & Effluent Cleaner',
+    title: 'Water & Effluent Cleaner (Taloja River)',
     icon: '💧',
-    eli5Summary: 'Stopping toxic factory waste from polluting rivers and recycling wastewater back into clean factory water.',
-    whyItMatters: 'Factories generate dirty water. If toxic waste enters the central treatment plant without warning, it destroys the filter bacteria!',
-    whatTechDoes: 'Uses optical sensors in drain pipes to detect chemical surges 40 minutes before they reach the main treatment plant.',
-    whatYouDo: 'Map out factory outreach, create the water-recycling ROI model, and explain how local communities get cleaner river water.',
-    techRoles: ['Sensor Engineer', 'Embedded Dev'],
-    nonTechRoles: ['Water Resource Planner', 'Community Impact Advocate', 'Operations Lead']
+    eli5Summary: 'Aerial pollution heatmapping of Taloja River & industrial lakes, generating automated MIDC inspection notices for toxic factories.',
+    whyItMatters: 'Toxic chemical spills destroy central water treatment plants. Visual heatmaps pinpoint exact polluting factories.',
+    whatTechDoes: 'Generates spectral color maps comparing polluted water zones vs clean zones.',
+    whatYouDo: 'Draft the automated MIDC Inspection Notice template, plan factory outreach, and present the community river restoration model.',
+    techRoles: ['Spectral Analyst', 'Web GIS Dev'],
+    nonTechRoles: ['Policy & Legal Draft Lead', 'Community Advocate', 'Operations Lead']
   },
   {
     id: 'energy',
-    title: 'Green Energy & Solar Sharing',
+    title: 'Rooftop Solar & Green Energy Audit',
     icon: '⚡',
-    eli5Summary: 'Letting neighbor factories trade excess rooftop solar power directly with each other like sharing Wi-Fi.',
-    whyItMatters: 'Electricity is super expensive during peak hours. Some factories have massive solar panels going unused on weekends.',
-    whatTechDoes: 'Builds a smart microgrid algorithm & trading platform to balance solar generation and factory electricity loads.',
-    whatYouDo: 'Create the financial model showing how factories cut electricity bills by 25%, design the user dashboard, and lead the pitch.',
-    techRoles: ['Smart Grid Dev', 'Web App Developer'],
-    nonTechRoles: ['Energy Business Analyst', 'Financial Modeler', 'UI/UX Visualizer']
+    eli5Summary: 'Auditing factory roof solar % via drone shots, encouraging basic solar adoption starting with common lights & fans to cut carbon.',
+    whyItMatters: 'Most factory roofs sit empty while grid power costs spike. Starting small with common area lighting builds momentum for full solar adoption.',
+    whatTechDoes: 'Analyzes aerial drone photos to calculate roof area and solar panel coverage percentage.',
+    whatYouDo: 'Quantify the theoretical energy savings, design the phased solar adoption roadmap for factory owners, and model the financial payback.',
+    techRoles: ['Computer Vision Dev', 'Financial Modeling Dev'],
+    nonTechRoles: ['Solar Business Analyst', 'Financial Modeler', 'UI/UX Visualizer']
   },
   {
     id: 'ai-parks',
-    title: 'AI Safety & Fire Sentinel',
+    title: 'AI Safety & Fire Sentinel (Fire Dept Radar)',
     icon: '🤖',
-    eli5Summary: 'Using smart cameras to spot chemical leaks, fires, and safety violations before accidents happen.',
-    whyItMatters: 'Industrial parks span thousands of acres. Human security guards cannot watch every single corner 24/7.',
-    whatTechDoes: 'Connects AI video software to existing CCTV cameras to trigger instant SMS alerts when smoke, fire, or oil spills appear.',
-    whatYouDo: 'Build the factory safety protocol, design the emergency alert mobile interface, and deliver a dramatic live pitch demo to the judges!',
-    techRoles: ['Python AI Engineer', 'Backend Dev'],
-    nonTechRoles: ['Factory Safety Strategist', 'UI Designer', 'Pitch Director']
+    eli5Summary: 'Connecting factory camera feeds to local Fire Department radar with chemical lists, PPE guidance, traffic clearance, and a manual Kill Switch.',
+    whyItMatters: 'Chemical fires spread in minutes! Responders need instant chemical details, PPE info, and clear emergency traffic routes.',
+    whatTechDoes: 'Streams AI vision alerts to fire stations, pushes chemical inventory data, and broadcasts traffic clearance alerts to neighbor factories.',
+    whatYouDo: 'Design the emergency response protocol, manage the mandatory AI Kill Switch audit log, and deliver a dramatic live fire-dispatch pitch!',
+    techRoles: ['Python AI Engineer', 'Real-Time Streaming Dev'],
+    nonTechRoles: ['Emergency Safety Director', 'Audit Log Lead', 'Pitch Storyteller']
   }
 ];
 
@@ -65,6 +122,51 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountdown();
   populateStudioSelects();
 });
+
+// Switch Sandbox Demo
+function switchSandboxTab(key, btnElem) {
+  document.querySelectorAll('.sandbox-tab-btn').forEach(b => b.classList.remove('active'));
+  btnElem.classList.add('active');
+
+  const demo = sandboxDemos[key];
+  const container = document.getElementById('sandbox-viewer-content');
+
+  container.innerHTML = `
+    <div class="sandbox-media-wrapper">
+      <img src="${demo.image}" alt="${demo.title}">
+    </div>
+    <div class="sandbox-details">
+      <span class="sandbox-badge">${demo.locationBadge}</span>
+      <h4>${demo.title}</h4>
+      
+      <ul class="sandbox-feature-list">
+        ${demo.features.map(f => `<li><span>🔹</span><div>${f}</div></li>`).join('')}
+      </ul>
+
+      ${key === 'fire' ? `
+        <div class="kill-switch-box">
+          <button class="btn-kill-switch" onclick="triggerKillSwitch()">🚨 TEST MANUAL AI KILL SWITCH</button>
+          <div id="kill-switch-log-display" class="override-log" style="display:none;"></div>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+// Trigger Simulated AI Kill Switch
+function triggerKillSwitch() {
+  const logBox = document.getElementById('kill-switch-log-display');
+  const now = new Date().toLocaleTimeString();
+  
+  logBox.style.display = 'block';
+  logBox.innerHTML = `
+    [OVERRIDE AUDIT LOG - ${now}]<br>
+    STATUS: AI Camera Vision System KILLED BY MANUAL OVERRIDE.<br>
+    OPERATOR ID: #SAFE-OPERATOR-8842<br>
+    REASON LOGGED: "Routine sensor recalibration & manual safety audit."<br>
+    AUDIT TRAIL: Saved to Permanent MIDC Governance Registry.
+  `;
+}
 
 // Render ELI5 Cards
 function renderELI5Tracks() {
@@ -190,7 +292,7 @@ function generateCoPitch() {
   const friendName = document.getElementById('friend-name').value || 'My Teammate';
   const myRole = document.getElementById('friend-role').value;
   const trackId = document.getElementById('co-track-select').value;
-  const ideaTitle = document.getElementById('co-idea-title').value || 'Smart MIDC Solution';
+  const ideaTitle = document.getElementById('co-idea-title').value || 'MIDC Smart Ground Survey';
 
   const track = eli5Tracks.find(t => t.id === trackId);
 
@@ -200,21 +302,22 @@ function generateCoPitch() {
 Target Track: ${track.icon} ${track.title}
 Team Roles: ${friendName} (${myRole}) + Tech Lead (Developer)
 
-SLIDE 1: THE REAL-WORLD PROBLEM
+SLIDE 1: GROUND REALITY & PROBLEM
 • ${track.whyItMatters}
 
 SLIDE 2: OUR SOLUTION CONCEPT ("${ideaTitle}")
 • Concept: ${track.eli5Summary}
 
-SLIDE 3: HOW IT WORKS (TECH + HUMAN)
-• Tech Hardware/Software: ${track.whatTechDoes}
-• Operations & Field Strategy: ${track.whatYouDo}
+SLIDE 3: TECH + HUMAN EXECUTION
+• Drone & AI Survey Tech: ${track.whatTechDoes}
+• Operations & Governance (Led by ${friendName}): ${track.whatYouDo}
 
-SLIDE 4: WHY MIDC WILL LOVE IT (BUSINESS IMPACT)
-• Solves real infrastructure issues across Maharashtra industrial estates.
-• Clear cost savings, environmental impact, and ready-to-deploy plan (TRL 4+).
+SLIDE 4: SAFETY & GOVERNANCE
+• Full AI Manual Override / Kill Switch with audit logging.
+• Direct MIDC Notice & Emergency Fire Dept Radar Integration.
 
-SLIDE 5: PITCH CONCLUSION
+SLIDE 5: PITCH CONCLUSION & ROI
+• Clear financial payback, ready-to-deploy TRL 4+ prototype.
 • Presented by ${friendName} (${myRole}) & Team.
 ==================================================================
 `;
@@ -252,17 +355,17 @@ function openTrackModal(trackId) {
     </div>
 
     <div style="margin-bottom:20px;">
-      <h4 style="color:#fff; font-size:1.1rem; margin-bottom:8px;">Why is this a big problem for MIDC?</h4>
+      <h4 style="color:#fff; font-size:1.1rem; margin-bottom:8px;">Ground Reality & Pain Point</h4>
       <p style="color:var(--text-muted); font-size:0.95rem;">${track.whyItMatters}</p>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
       <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border-glass); padding:16px; border-radius:12px;">
-        <h5 style="color:var(--accent-purple); font-size:0.95rem; margin-bottom:6px;">💻 The Tech Part</h5>
+        <h5 style="color:var(--accent-purple); font-size:0.95rem; margin-bottom:6px;">💻 Drone & Tech Component</h5>
         <p style="color:var(--text-muted); font-size:0.88rem;">${track.whatTechDoes}</p>
       </div>
       <div style="background:rgba(139, 92, 246, 0.12); border:1px solid var(--accent-purple); padding:16px; border-radius:12px;">
-        <h5 style="color:#d8b4fe; font-size:0.95rem; margin-bottom:6px;">🌟 The Non-Tech Part (YOU!)</h5>
+        <h5 style="color:#d8b4fe; font-size:0.95rem; margin-bottom:6px;">🌟 Non-Tech Strategy (YOU!)</h5>
         <p style="color:#e5e7eb; font-size:0.88rem;">${track.whatYouDo}</p>
       </div>
     </div>
