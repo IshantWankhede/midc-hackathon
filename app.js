@@ -1,10 +1,9 @@
-// PotholeMukt MIDC - Live Prototype & Math Engine
+// PotholeMukt MIDC - Flagship Product Application Logic
 
-// Leaflet Map Instance
 let leafletMap = null;
 let potholeMarkers = [];
 
-// Sample Potholes Data in Taloja MIDC
+// Taloja MIDC Sample Potholes
 const talojaPotholes = [
   {
     id: 'TAL-96420',
@@ -30,7 +29,7 @@ const talojaPotholes = [
   },
   {
     id: 'TAL-96422',
-    location: 'Taloja MIDC Common Effluent Access Road (Sector 4)',
+    location: 'Taloja MIDC Effluent Access Corridor (Sector 4)',
     lat: 19.0640,
     lng: 73.0790,
     severity: 'CRITICAL',
@@ -43,40 +42,32 @@ const talojaPotholes = [
 
 let selectedPothole = talojaPotholes[0];
 
-// Proposal & Team Data
-const proposalData = {
-  title: 'PotholeMukt MIDC : AI Pothole Detector & Repair Guidance',
-  statementNo: 1,
-  sector: 'Pothole Detection & Repair',
-  subSector: 'AI-Driven Road Inspection & Patching',
-  pilotLocation: 'Taloja MIDC (Sectors 1 to 24 Industrial Spine Road, Raigad District)',
-  team: [
-    {
-      name: 'Ritesh Singh',
-      title: 'Senior Construction Program Manager',
-      qualification: 'MS in Civil Engineering',
-      experience: '10 Years Industry Experience',
-      role: 'Technical Program Manager & Civil Infrastructure Lead',
-      avatar: '👷‍♂️'
-    },
-    {
-      name: 'Ishant Wankhede',
-      title: 'Senior Data Scientist',
-      qualification: 'Lead Applicant & SPOC',
-      experience: 'Lead Data Science & AI Engineering',
-      role: 'AI / Vision-AI & Data Science Lead',
-      avatar: '👨‍💻'
-    }
-  ]
-};
+// Team & Timeline Data
+const proposalTeam = [
+  {
+    name: 'Ritesh Singh',
+    title: 'Senior Construction Program Manager',
+    qualification: 'MS in Civil Engineering',
+    experience: '10 Years Industry Experience',
+    role: 'Technical Program Manager & Civil Infrastructure Lead',
+    avatar: '👷‍♂️'
+  },
+  {
+    name: 'Ishant Wankhede',
+    title: 'Senior Data Scientist',
+    qualification: 'Lead Applicant & SPOC',
+    experience: 'Lead Data Science & AI Engineering',
+    role: 'AI / Vision-AI & Data Science Lead',
+    avatar: '👨‍💻'
+  }
+];
 
-// Method Steps & Milestones
 const methodologySteps = [
-  { step: '1. SCAN', title: 'Fleet Vision-AI Scanning', desc: 'Camera pods mounted on regular moving city buses/garbage trucks capture daily road video feeds.' },
-  { step: '2. ESTIMATE', title: 'Automated Cost & Vol. Engine', desc: 'AI measures pothole depth & area, auto-calculating exact repair material volume, cost (INR), and fix time.' },
-  { step: '3. SCHEDULE', title: 'Traffic-Smart Dispatch', desc: 'Schedules patching during low-traffic night hours (11 PM – 4 AM) so 40-tonne container trucks don’t get delayed.' },
-  { step: '4. PATCH', title: '30-Min Rain-Proof Repair', desc: 'Technicians apply fast-curing polymer asphalt allowing heavy truck traffic to resume within 30 minutes.' },
-  { step: '5. AUDIT', title: '365-Day Quality Tracking', desc: 'GIS dashboard tracks patched location for 1 year to ensure zero recurrence and contractor accountability.' }
+  { step: '01. SCAN', title: 'Fleet Vision-AI Scanning', desc: 'Camera pods mounted on regular moving city buses/garbage trucks capture daily road video feeds.' },
+  { step: '02. ESTIMATE', title: 'Automated Cost Engine', desc: 'AI measures pothole depth & area, auto-calculating exact repair material volume, cost (INR), and fix time.' },
+  { step: '03. SCHEDULE', title: 'Traffic-Smart Dispatch', desc: 'Schedules patching during low-traffic night hours (11 PM – 4 AM) so 40-tonne container trucks don’t get delayed.' },
+  { step: '04. PATCH', title: '30-Min Rain-Proof Repair', desc: 'Technicians apply fast-curing polymer asphalt allowing heavy truck traffic to resume within 30 minutes.' },
+  { step: '05. AUDIT', title: '365-Day Quality Tracking', desc: 'GIS dashboard tracks patched location for 1 year to ensure zero recurrence and contractor accountability.' }
 ];
 
 const timelineMilestones = [
@@ -87,29 +78,40 @@ const timelineMilestones = [
   { num: '05', title: 'Performance Assessment', duration: '3 Weeks (Weeks 10–12)', outcome: '30-day durability tracking of patched roads under heavy 40-tonne truck loads, and final pilot report submission to MIDC.' }
 ];
 
-// Initialize Everything
+// On DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
-  initLeafletMap();
   renderMethodology();
   renderTeam();
   renderTimeline();
   updateMathEngine(selectedPothole);
+  initLeafletMap();
 });
 
-// Initialize Leaflet Map
+// Workbench Tab Switching
+function switchWorkbenchTab(tabId, btnElem) {
+  document.querySelectorAll('.workbench-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+  btnElem.classList.add('active');
+  document.getElementById(`tab-${tabId}`).classList.add('active');
+
+  if (tabId === 'gis' && leafletMap) {
+    setTimeout(() => leafletMap.invalidateSize(), 200);
+  }
+}
+
+// Leaflet GIS Map Setup
 function initLeafletMap() {
-  const mapElem = document.getElementById('taloja-leaflet-map');
+  const mapElem = document.getElementById('taloja-gis-map');
   if (!mapElem) return;
 
-  // Center on Taloja MIDC
-  leafletMap = L.map('taloja-leaflet-map').setView([19.0685, 73.0842], 14);
+  leafletMap = L.map('taloja-gis-map').setView([19.0685, 73.0842], 14);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap contributors | MIDC Taloja Corridor'
   }).addTo(leafletMap);
 
-  // Add Markers for Taloja Potholes
   talojaPotholes.forEach((p, idx) => {
     const marker = L.marker([p.lat, p.lng]).addTo(leafletMap);
     
@@ -119,7 +121,7 @@ function initLeafletMap() {
         <span style="font-size:0.8rem;">${p.location}</span><br>
         <span style="font-size:0.75rem; color:#f59e0b;">Severity: ${p.severity}</span><br>
         <button onclick="selectPotholeFromMap(${idx})" style="background:#10b981; color:#000; border:none; padding:4px 8px; border-radius:4px; margin-top:4px; font-weight:bold; cursor:pointer;">
-          Analyze Pothole &rarr;
+          Inspect Pothole &rarr;
         </button>
       </div>
     `);
@@ -132,16 +134,17 @@ function selectPotholeFromMap(index) {
   selectedPothole = talojaPotholes[index];
   updateMathEngine(selectedPothole);
   drawCanvasBoundingBox();
+  switchWorkbenchTab('scanner', document.querySelector('.workbench-tab-btn'));
 }
 
-// REAL-TIME MATH ENGINE
+// Math Engine
 function updateMathEngine(p) {
   const volumeM3 = p.areaSqM * (p.depthCm / 100);
-  const polymerMassKg = Math.round(volumeM3 * 2200); // ~2200 kg/m3 asphalt density
+  const polymerMassKg = Math.round(volumeM3 * 2200);
   
-  const materialCostINR = Math.round(polymerMassKg * 65); // ₹65 per kg cold mix
+  const materialCostINR = Math.round(polymerMassKg * 65);
   const repairHours = Math.round((p.areaSqM * 1.8) * 10) / 10;
-  const laborCostINR = Math.round(repairHours * 750); // ₹750/hr
+  const laborCostINR = Math.round(repairHours * 750);
   const machineryCostINR = 3500;
   const totalCostINR = materialCostINR + laborCostINR + machineryCostINR;
 
@@ -158,7 +161,7 @@ function updateMathEngine(p) {
   document.getElementById('cost-total').innerText = `₹ ${totalCostINR.toLocaleString()}`;
 }
 
-// Draw Vision-AI Canvas Bounding Box
+// AI Canvas Bounding Box
 function drawCanvasBoundingBox() {
   const canvas = document.getElementById('vision-ai-canvas');
   if (!canvas) return;
@@ -172,23 +175,20 @@ function drawCanvasBoundingBox() {
   const w = (box.w / 100) * canvas.width;
   const h = (box.h / 100) * canvas.height;
 
-  // Bounding box glow
   ctx.strokeStyle = selectedPothole.severity === 'CRITICAL' ? '#f43f5e' : '#10b981';
   ctx.lineWidth = 4;
   ctx.shadowColor = ctx.strokeStyle;
   ctx.shadowBlur = 10;
   ctx.strokeRect(x, y, w, h);
 
-  // Label Box
   ctx.fillStyle = ctx.strokeStyle;
   ctx.fillRect(x, y - 24, w, 24);
 
-  ctx.fillStyle = '#080c16';
+  ctx.fillStyle = '#070a12';
   ctx.font = 'bold 12px Outfit, sans-serif';
   ctx.fillText(`${selectedPothole.id} [${selectedPothole.severity}]`, x + 6, y - 8);
 }
 
-// Run Vision-AI Scan Simulation
 function runVisionAIScan() {
   const statusElem = document.getElementById('ai-scan-status');
   statusElem.innerText = '🎥 Vision-AI Scanning in Progress... Processing Frame Feeds';
@@ -198,23 +198,21 @@ function runVisionAIScan() {
     drawCanvasBoundingBox();
     statusElem.innerText = `✅ Detection Complete! Identified ${selectedPothole.id} (${selectedPothole.areaSqM} m²)`;
     statusElem.style.color = '#10b981';
-  }, 800);
+  }, 700);
 }
 
-// Generate MIDC Official Work Ticket
+// Work Order Dispatcher
 function generateWorkTicket() {
   const p = selectedPothole;
   const volumeM3 = p.areaSqM * (p.depthCm / 100);
   const polymerMassKg = Math.round(volumeM3 * 2200);
   const totalCostINR = Math.round(polymerMassKg * 65) + Math.round((p.areaSqM * 1.8) * 750) + 3500;
 
-  const ticketBox = document.getElementById('ticket-result-box');
   const ticketText = document.getElementById('ticket-text-content');
-
   ticketText.innerText = `
 ================================================================================
 🏢 MAHARASHTRA INDUSTRIAL DEVELOPMENT CORPORATION (MIDC)
-ROAD MAINTENANCE WORK ORDER & DISPATCH TICKET
+OFFICIAL ROAD MAINTENANCE WORK ORDER & DISPATCH TICKET
 ================================================================================
 Ticket ID: WT-2026-${p.id}
 Generated At: ${new Date().toLocaleString()}
@@ -245,8 +243,9 @@ GPS Coordinates: Lat ${p.lat}, Lng ${p.lng}
 ================================================================================
   `;
 
-  ticketBox.style.display = 'block';
-  ticketBox.scrollIntoView({ behavior: 'smooth' });
+  // Switch to Ticket tab
+  const ticketTabBtn = document.querySelectorAll('.workbench-tab-btn')[2];
+  switchWorkbenchTab('ticket', ticketTabBtn);
 }
 
 function printWorkTicket() {
@@ -257,26 +256,25 @@ function printWorkTicket() {
   printWin.print();
 }
 
-// Render Methodology Loop
+// Renderers
 function renderMethodology() {
-  const container = document.getElementById('methodology-container');
+  const container = document.getElementById('stepper-container');
   if (!container) return;
 
   container.innerHTML = methodologySteps.map(m => `
-    <div class="method-card">
-      <div class="method-step-num">${m.step}</div>
-      <h4 class="method-title">${m.title}</h4>
-      <p class="method-desc">${m.desc}</p>
+    <div class="step-card">
+      <div class="step-num">${m.step}</div>
+      <h4 class="step-title">${m.title}</h4>
+      <p class="step-desc">${m.desc}</p>
     </div>
   `).join('');
 }
 
-// Render Team Cards
 function renderTeam() {
   const container = document.getElementById('team-container');
   if (!container) return;
 
-  container.innerHTML = proposalData.team.map(t => `
+  container.innerHTML = proposalTeam.map(t => `
     <div class="team-card">
       <div class="team-avatar">${t.avatar}</div>
       <h3 class="team-name">${t.name}</h3>
@@ -289,7 +287,6 @@ function renderTeam() {
   `).join('');
 }
 
-// Render Timeline
 function renderTimeline() {
   const container = document.getElementById('timeline-container');
   if (!container) return;
