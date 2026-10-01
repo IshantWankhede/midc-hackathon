@@ -3,318 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PotholeMukt MIDC : AI Pothole Detector & Repair Guidance</title>
-  <meta name="description" content="Official Submission for MIDC Grand Challenge 2026 by Ritesh Singh & Ishant Wankhede. Featuring Vision-AI road scanning, Taloja MIDC GIS mapping, automated cost estimation, and 30-min polymer patching.">
-  
+  <title>PotholeMukt MIDC - Live Pothole Map & Command Center</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
-  <!-- Navbar -->
+  <!-- Welcome Splash Screen -->
+  <div id="welcome-splash" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-banner">
+        <span class="logo-icon-large">🛣️</span>
+        <h1>PotholeMukt MIDC</h1>
+      </div>
+      
+      <div class="mission-box">
+        <h3>Our Mission / हमारा मिशन</h3>
+        <p class="mission-en">
+          To eradicate potholes in MIDC industrial zones using Fleet Vision-AI, automated diagnostics, and 30-minute rain-proof polymers for zero-recurrence road maintenance.
+        </p>
+        <div class="mission-divider"></div>
+        <p class="mission-hi">
+          एमआईडीसी (MIDC) औद्योगिक क्षेत्रों में फ्लीट विजन-एआई, स्वचालित निदान और 30 मिनट में सेट होने वाले रेन-प्रूफ पॉलिमर के उपयोग से गड्ढों को स्थायी रूप से समाप्त करना, ताकि सड़कों की मरम्मत बार-बार न करनी पड़े।
+        </p>
+      </div>
+
+      <button class="btn btn-primary btn-large" onclick="dismissSplash()">
+        Next: Enter Command Center ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- Top Navbar -->
   <nav class="navbar">
-    <div class="container nav-content">
-      <a href="#" class="logo-brand">
-        <span>🛣️ PotholeMukt MIDC</span>
-        <span class="logo-badge">Official Proposal</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#workbench">Command Center</a></li>
-        <li><a href="#methodology">5-Step Methodology</a></li>
-        <li><a href="#proposal-details">Submission Q&A</a></li>
-        <li><a href="#team">Team & Capability</a></li>
-        <li><a href="#timeline">Timeline</a></li>
-      </ul>
-      <a href="#workbench" class="btn-cta">
-        ⚡ Open Command Center &rarr;
-      </a>
+    <div class="nav-brand">
+      <span class="logo-icon">🛣️</span>
+      <h1>PotholeMukt MIDC</h1>
+      <span class="badge">Live Command Center</span>
+    </div>
+    <div class="nav-metrics">
+      <div class="metric-pill"><span>Pilot:</span> Taloja MIDC</div>
+      <div class="metric-pill"><span>Accuracy:</span> 90%+ Vision-AI</div>
+      <div class="metric-pill"><span>Cure Time:</span> 30 Mins</div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="hero-pill">
-          <span>🏆 MIDC Grand Challenge 2026 Submission</span>
-          <span>•</span>
-          <span>Problem Statement #1</span>
-        </div>
-        <h1 class="hero-title">
-          PotholeMukt MIDC : <span>AI Pothole Detector</span> & Repair Guidance
-        </h1>
-        <p class="hero-desc">
-          A ready-to-implement solution for MIDC industrial estates combining <strong>Vision-AI fleet scanning</strong>, 
-          <strong>automated material & cost estimation</strong>, <strong>traffic-scheduled night dispatching</strong>, and 
-          <strong>30-minute monsoon-resistant polymer patching</strong>.
-        </p>
-        <div class="hero-actions">
-          <a href="#workbench" class="btn-cta">⚡ Launch Interactive Workbench</a>
-          <a href="#proposal-details" class="btn-secondary">📋 View Proposal Details</a>
-        </div>
-      </div>
-      <div class="hero-visual-card">
-        <img src="assets/nerul_pothole_map.jpg" alt="PotholeMukt MIDC Google Map GIS View">
-      </div>
-    </div>
-  </header>
-
-  <!-- Key Metrics Strip -->
-  <section class="container">
-    <div class="stats-strip">
-      <div class="stat-card">
-        <div class="stat-num">90%+</div>
-        <div class="stat-desc">AI Vision Detection Accuracy</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">30 Mins</div>
-        <div class="stat-desc">Rain-Proof Polymer Cure Time</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">Taloja MIDC</div>
-        <div class="stat-desc">Heavy Freight Corridor Pilot Site</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">₹2 Crore</div>
-        <div class="stat-desc">MIDC Grand Challenge Fund</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- UNIFIED COMMAND CENTER WORKBENCH SECTION -->
-  <section id="workbench" class="container">
-    <div class="section-header">
-      <span class="section-tag">Live Demonstration</span>
-      <h2 class="section-title">Command Center Interactive Workbench 🛠️</h2>
-      <p class="section-desc">
-        Test our Vision-AI detection engine, inspect Taloja MIDC GIS maps, and generate official MIDC maintenance work tickets:
-      </p>
-    </div>
-
-    <div class="workbench-box">
-      <!-- Workbench Tabs -->
-      <div class="workbench-nav">
-        <button class="workbench-tab-btn active" onclick="switchWorkbenchTab('scanner', this)">
-          🎥 Live AI Vision Scanner & Cost Engine
-        </button>
-        <button class="workbench-tab-btn" onclick="switchWorkbenchTab('gis', this)">
-          🗺️ Taloja MIDC Interactive GIS Map
-        </button>
-        <button class="workbench-tab-btn" onclick="switchWorkbenchTab('ticket', this)">
-          📄 MIDC Work Order Dispatcher
-        </button>
+  <!-- Main App Layout -->
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Sidebar Navigation -->
+      <div class="sidebar-nav">
+        <button class="tab-btn active" data-tab="tab-ai">🎥 Vision AI</button>
+        <button class="tab-btn" data-tab="tab-diagnostics">🧮 Diagnostics</button>
+        <button class="tab-btn" data-tab="tab-info">📋 Proposal</button>
       </div>
 
-      <!-- Tab 1: Vision AI Scanner & Math Engine -->
-      <div id="tab-scanner" class="tab-pane active">
-        <div class="scanner-split">
-          <div>
-            <div class="video-frame-box">
-              <img src="assets/nerul_pothole_map.jpg" alt="Road Scanning Feed">
-              <canvas id="vision-ai-canvas" class="overlay-canvas" width="640" height="360"></canvas>
+      <!-- Tab Content -->
+      <div class="sidebar-content">
+        
+        <!-- Tab 1: Vision AI -->
+        <div id="tab-ai" class="tab-pane active">
+          <div class="panel-header">
+            <h2>Vision-AI Feed</h2>
+            <p>Live vehicle dashboard camera (Fleet-04)</p>
+          </div>
+          
+          <div class="video-container ai-scanner-view">
+            <div class="scanning-overlay hidden" id="scan-overlay"></div>
+            <img id="dashcam-feed" src="assets/dashcam_feed.jpg" alt="Dashboard Camera Feed">
+            <canvas id="vision-ai-canvas" width="640" height="640"></canvas>
+            
+            <div class="hud-elements">
+               <div class="hud-top-left">REC <span class="blink text-rose">●</span></div>
+               <div class="hud-top-right">42 km/h</div>
+               <div class="hud-bottom-left" id="hud-gps">LAT: 19.0685  LNG: 73.0842</div>
+               <div class="hud-bottom-right">CAM-04</div>
+            </div>
+          </div>
+          
+          <div class="ai-controls">
+            <div class="status-bar mb-2">
+               <span class="status-label">System Status: </span>
+               <span class="status-value text-emerald font-semibold" id="ai-scan-status">Awaiting Scan...</span>
             </div>
             
-            <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
-              <button class="btn-cta" onclick="runVisionAIScan()">▶️ Run Vision-AI Scan</button>
-              <button class="btn-secondary" onclick="generateWorkTicket()">📄 Generate MIDC Work Order</button>
+            <div class="progress-container hidden" id="scan-progress-container">
+               <div class="progress-bar" id="scan-progress"></div>
             </div>
-            <div id="ai-scan-status" style="font-size:0.88rem; font-weight:600; color:var(--accent-cyan); margin-top:10px;">
-              Ready. Click "Run Vision-AI Scan" to initiate live detection and bounding box analysis.
+            
+            <button class="btn btn-primary w-full mt-4" id="btn-run-scan" onclick="runVisionAIScan()">
+              ▶️ Initiate Real-Time Scan
+            </button>
+          </div>
+
+          <div class="ai-metrics mt-4">
+            <div class="metric-row">
+              <span>Detection Model:</span>
+              <strong class="text-cyan">YOLOv8-Nano (Edge)</strong>
+            </div>
+            <div class="metric-row">
+              <span>Confidence Thresh:</span>
+              <strong>0.85</strong>
+            </div>
+            <div class="metric-row">
+              <span>Inference Latency:</span>
+              <strong><span id="ai-latency">--</span> ms</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Diagnostics & Work Order -->
+        <div id="tab-diagnostics" class="tab-pane">
+          <div class="panel-header">
+            <h2>Pothole Diagnostics</h2>
+            <p>Select a marker on the map to analyze.</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <label>Pothole ID</label>
+              <div id="stat-id" class="val">TAL-00000</div>
+            </div>
+            <div class="stat-box">
+              <label>Severity</label>
+              <div id="stat-severity" class="val text-amber">MEDIUM</div>
+            </div>
+            <div class="stat-box">
+              <label>Surface Area</label>
+              <div id="stat-area" class="val">0.0 m²</div>
+            </div>
+            <div class="stat-box">
+              <label>Depth</label>
+              <div id="stat-depth" class="val">0.0 cm</div>
+            </div>
+            <div class="stat-box">
+              <label>Polymer Mass</label>
+              <div id="stat-mass" class="val">0 kg</div>
+            </div>
+            <div class="stat-box">
+              <label>Fix Time</label>
+              <div id="stat-time" class="val">0 Hours</div>
             </div>
           </div>
 
-          <!-- Real-Time Cost & Analytics Panel -->
-          <div class="analytics-panel">
-            <span class="hero-pill" style="font-size:0.75rem; padding:3px 10px; margin-bottom:12px;">🧮 Real-Time Math Engine</span>
-            <h4 style="font-family:var(--font-heading); color:#fff; font-size:1.3rem; margin-bottom:12px;">Pothole Diagnostics</h4>
-
-            <div class="metric-grid-2">
-              <div class="mini-stat">
-                <div class="mini-stat-label">Pothole ID</div>
-                <div class="mini-stat-val" id="stat-id">TAL-96420</div>
-              </div>
-              <div class="mini-stat">
-                <div class="mini-stat-label">Severity</div>
-                <div class="mini-stat-val" id="stat-severity" style="color:var(--accent-amber);">HIGH</div>
-              </div>
-              <div class="mini-stat">
-                <div class="mini-stat-label">Surface Area</div>
-                <div class="mini-stat-val" id="stat-area">1.45 m²</div>
-              </div>
-              <div class="mini-stat">
-                <div class="mini-stat-label">Depth</div>
-                <div class="mini-stat-val" id="stat-depth">8.5 cm</div>
-              </div>
-              <div class="mini-stat">
-                <div class="mini-stat-label">Polymer Mass</div>
-                <div class="mini-stat-val" id="stat-mass">271 kg</div>
-              </div>
-              <div class="mini-stat">
-                <div class="mini-stat-label">Est. Fix Duration</div>
-                <div class="mini-stat-val" id="stat-time">2.6 Hours</div>
-              </div>
-            </div>
-
-            <table class="cost-table">
-              <thead>
-                <tr>
-                  <th>Cost Element</th>
-                  <th>Estimate (INR)</th>
-                </tr>
-              </thead>
+          <div class="cost-breakdown">
+            <h3>Automated Cost Engine</h3>
+            <table>
               <tbody>
                 <tr>
-                  <td>Polymer Cold-Mix Asphalt</td>
-                  <td id="cost-material">₹ 17,615</td>
+                  <td>Polymer Cold-Mix</td>
+                  <td id="cost-material" class="text-right">₹ 0</td>
                 </tr>
                 <tr>
-                  <td>Technician & Labor Hours</td>
-                  <td id="cost-labor">₹ 1,950</td>
+                  <td>Labor Overhead</td>
+                  <td id="cost-labor" class="text-right">₹ 0</td>
                 </tr>
                 <tr>
-                  <td>Machinery Overhead</td>
-                  <td id="cost-machinery">₹ 3,500</td>
+                  <td>Machinery</td>
+                  <td id="cost-machinery" class="text-right">₹ 0</td>
                 </tr>
-                <tr style="font-weight:bold; border-top:1px solid var(--accent-emerald);">
-                  <td style="color:var(--accent-emerald);">Total Estimated Cost</td>
-                  <td id="cost-total" style="color:var(--accent-emerald); font-size:1.1rem;">₹ 23,065</td>
+                <tr class="total-row">
+                  <td>Total Estimated</td>
+                  <td id="cost-total" class="text-right text-emerald">₹ 0</td>
                 </tr>
               </tbody>
             </table>
+          </div>
 
-            <div style="background:rgba(245, 158, 11, 0.12); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:10px; font-size:0.82rem; color:#fde68a;">
-              🌙 <strong>Traffic Schedule:</strong> NIGHT SHIFT (11 PM – 4 AM) to prevent 40-tonne container truck gridlocks in Taloja MIDC.
-            </div>
+          <div class="info-alert mt-4">
+            🌙 Night Shift (11 PM - 4 AM) dispatch recommended for heavy freight zone.
+          </div>
+
+          <div class="action-group mt-4">
+            <button class="btn btn-secondary w-full" onclick="generateWorkTicket()">📄 Generate Work Ticket</button>
+          </div>
+
+          <!-- Hidden printable ticket area -->
+          <pre id="ticket-text-content" style="display:none;"></pre>
+        </div>
+
+        <!-- Tab 3: Proposal Details -->
+        <div id="tab-info" class="tab-pane">
+          <div class="panel-header">
+            <h2>Proposal Details</h2>
+            <p>MIDC Grand Challenge 2026</p>
+          </div>
+          
+          <div class="accordion">
+            <details>
+              <summary>5-Step Methodology</summary>
+              <div id="stepper-container" class="content-list"></div>
+            </details>
+            <details open>
+              <summary>Team Capability</summary>
+              <div id="team-container" class="content-list"></div>
+            </details>
+            <details>
+              <summary>Implementation Timeline</summary>
+              <div id="timeline-container" class="content-list"></div>
+            </details>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Main Map Area -->
+    <main class="map-area">
+      <div id="taloja-gis-map"></div>
+      
+      <!-- Overlay Work Ticket Modal (shown via JS when generated) -->
+      <div id="ticket-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>MIDC Official Work Ticket</h3>
+            <button class="btn-close" onclick="closeTicketModal()">✕</button>
+          </div>
+          <div class="modal-body">
+            <pre id="ticket-display"></pre>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" onclick="printWorkTicket()">🖨️ Print Ticket</button>
           </div>
         </div>
       </div>
 
-      <!-- Tab 2: Leaflet GIS Map -->
-      <div id="tab-gis" class="tab-pane">
-        <h4 style="font-family:var(--font-heading); color:#fff; font-size:1.3rem; margin-bottom:8px;">
-          📍 Taloja MIDC Freight Corridor GIS Map (Sectors 1–24)
-        </h4>
-        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">
-          Click markers to inspect potholes, view GPS coordinates, and launch automated repair diagnostics:
-        </p>
-        <div id="taloja-gis-map"></div>
-      </div>
-
-      <!-- Tab 3: MIDC Work Order Dispatcher -->
-      <div id="tab-ticket" class="tab-pane">
-        <div class="ticket-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:12px;">
-            <h4 style="color:var(--accent-emerald); font-family:var(--font-heading); font-size:1.3rem;">
-              📋 MIDC Official Maintenance Work Ticket
-            </h4>
-            <button class="btn-cta" style="font-size:0.8rem; padding:6px 14px;" onclick="printWorkTicket()">
-              🖨️ Print / Download Ticket
-            </button>
-          </div>
-          <pre id="ticket-text-content" style="white-space:pre-wrap; font-family:var(--font-code); color:#e5e7eb; font-size:0.88rem;"></pre>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5-Step Methodology Loop Section -->
-  <section id="methodology" class="container">
-    <div class="section-header">
-      <span class="section-tag">Implementation Loop</span>
-      <h2 class="section-title">The 5-Stage Implementation Methodology</h2>
-      <p class="section-desc">Our closed-loop operational workflow for zero-recurrence industrial road maintenance:</p>
-    </div>
-
-    <div id="stepper-container" class="stepper-grid">
-      <!-- Rendered dynamically by app.js -->
-    </div>
-  </section>
-
-  <!-- Official Proposal Q&A Section -->
-  <section id="proposal-details" class="container">
-    <div class="section-header">
-      <span class="section-tag">Submission Record</span>
-      <h2 class="section-title">Official Proposal Submission Details</h2>
-      <p class="section-desc">Key details from our submitted MIDC Grand Challenge application:</p>
-    </div>
-
-    <div class="accordion-wrapper">
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <h4>1. What is the Problem & Scale in MIDC?</h4>
-          <span style="color:var(--accent-emerald); font-weight:bold;">▼</span>
-        </div>
-        <div class="accordion-body">
-          <p>
-            Industrial estates like MIDC manage over 289 complexes with 10,000+ km of roads carrying continuous 24/7 heavy container traffic (40-tonne trucks) under heavy monsoons (2,000mm+ annual rain). Current road inspection relies on slow manual reporting, leaving potholes unaddressed for weeks, causing vehicle breakdowns, freight delays, and repeated patch wash-aways.
-          </p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <h4>2. Solution Summary (3 Simple Steps)</h4>
-          <span style="color:var(--accent-emerald); font-weight:bold;">▼</span>
-        </div>
-        <div class="accordion-body">
-          <p>
-            <strong>1. Automated Spotting:</strong> Small cameras mounted on regular moving city buses and garbage trucks scan industrial roads daily, pinning every pothole on an interactive digital map.<br>
-            <strong>2. Smart Estimations & Scheduling:</strong> For every pothole, the system automatically calculates repair costs, required materials, and recommends fixing it at night (11 PM - 4 AM) so heavy container trucks don't get stuck in traffic jams.<br>
-            <strong>3. Fast & Permanent Repairs:</strong> Repair crews use a rapid-curing, rain-proof material that dries in just 30 minutes, ensuring heavy trucks won't break the patch even during monsoon rains.
-          </p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <h4>3. Why are Existing Solutions Inadequate & What is Innovative?</h4>
-          <span style="color:var(--accent-emerald); font-weight:bold;">▼</span>
-        </div>
-        <div class="accordion-body">
-          <p>
-            Smartphone accelerometer apps suffer high false-positive rates and cannot estimate repair costs, while 3D laser inspection vans cost multi-crores and only run once a year. What makes <strong>PotholeMukt MIDC</strong> substantially better is its zero-extra-hardware fleet scanning, automated material/cost estimation before dispatch, traffic-density night scheduling, and 30-minute rain-proof polymer asphalt backed by 365-day digital audit maps.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team & Capability Section -->
-  <section id="team" class="container">
-    <div class="section-header">
-      <span class="section-tag">Team Capability</span>
-      <h2 class="section-title">Lead Applicants & Technical Expertise</h2>
-      <p class="section-desc">Combined 20 years of domain experience across Civil Engineering & Artificial Intelligence:</p>
-    </div>
-
-    <div id="team-container" class="team-grid">
-      <!-- Rendered dynamically by app.js -->
-    </div>
-  </section>
-
-  <!-- Timeline Section -->
-  <section id="timeline" class="container">
-    <div class="section-header">
-      <span class="section-tag">Pilot Roadmap</span>
-      <h2 class="section-title">12-Week Implementation Timeline</h2>
-      <p class="section-desc">Milestone roadmap for the Taloja MIDC pilot execution:</p>
-    </div>
-
-    <div id="timeline-container" class="timeline-list">
-      <!-- Rendered dynamically by app.js -->
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>PotholeMukt MIDC : AI Pothole Detector & Repair Guidance</p>
-      <p style="margin-top:8px;">
-        Official Website: <a href="https://ishantwankhede.github.io/midc-hackathon/" target="_blank">ishantwankhede.github.io/midc-hackathon/</a> | 
-        GitHub: <a href="https://github.com/IshantWankhede/midc-hackathon.git" target="_blank">github.com/IshantWankhede/midc-hackathon.git</a>
-      </p>
-    </div>
-  </footer>
+    </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
