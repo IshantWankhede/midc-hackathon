@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PotholeMukt MIDC : AI Pothole Detector & Repair Guidance - MIDC Proposal</title>
-  <meta name="description" content="Official submission for MIDC Grand Challenge 2026 by Ritesh Singh & Ishant Wankhede. AI Pothole Detection, Taloja MIDC pilot plan, night traffic scheduling, and 30-min rain-proof polymer repair.">
+  <title>PotholeMukt MIDC : AI Pothole Detector & Repair Guidance - Live Prototype</title>
+  <meta name="description" content="Working live prototype for MIDC Grand Challenge 2026 by Ritesh Singh & Ishant Wankhede. In-browser Vision-AI Scanner, Leaflet GIS Map for Taloja MIDC, Real-Time Repair Cost Math Engine, and Work-Ticket Dispatcher.">
   
   <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -15,18 +16,18 @@
     <div class="container nav-content">
       <a href="#" class="logo-brand">
         <span>🛣️ PotholeMukt MIDC</span>
-        <span class="logo-badge">Official Proposal</span>
+        <span class="logo-badge">Live Prototype</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#overview">Proposal Overview</a></li>
-        <li><a href="#gis-sandbox">Taloja GIS Sandbox</a></li>
+        <li><a href="#prototype-scanner">Live AI Scanner</a></li>
+        <li><a href="#taloja-map">Taloja GIS Map</a></li>
         <li><a href="#methodology">5-Step Methodology</a></li>
-        <li><a href="#details">Submission Q&A</a></li>
-        <li><a href="#team">Team Capability</a></li>
+        <li><a href="#details">Submission Details</a></li>
+        <li><a href="#team">Team & Capability</a></li>
         <li><a href="#timeline">Timeline</a></li>
       </ul>
-      <a href="#gis-sandbox" class="btn-cta">
-        View Live Pilot Demo &rarr;
+      <a href="#prototype-scanner" class="btn-cta">
+        ⚡ Launch Live AI Scanner &rarr;
       </a>
     </div>
   </nav>
@@ -36,20 +37,20 @@
     <div class="container hero-grid">
       <div>
         <div class="hero-badge-group">
-          <span class="hero-pill">🏆 MIDC Grand Challenge 2026 Submission</span>
-          <span class="hero-pill" style="border-color:var(--accent-cyan); color:var(--accent-cyan);">Problem Statement #1</span>
+          <span class="hero-pill">🏆 MIDC Grand Challenge 2026 Proposal</span>
+          <span class="hero-pill" style="border-color:var(--accent-cyan); color:var(--accent-cyan);">Working Concept / Prototype</span>
         </div>
         <h1 class="hero-title">
           PotholeMukt MIDC : <span>AI Pothole Detector</span> & Repair Guidance
         </h1>
         <p class="hero-desc">
-          A ready-to-implement solution for MIDC industrial estates combining <strong>Vision-AI fleet scanning</strong>, 
-          <strong>automated material & cost estimation</strong>, <strong>traffic-scheduled night dispatching</strong>, and 
-          <strong>30-minute monsoon-resistant polymer patching</strong>.
+          Official prototype developed by <strong>Ritesh Singh</strong> & <strong>Ishant Wankhede</strong>. 
+          Combines live <strong>Vision-AI road video scanning</strong>, <strong>automated volume & cost calculation</strong>, 
+          <strong>Taloja MIDC GIS mapping</strong>, and <strong>30-minute rain-proof polymer asphalt dispatch</strong>.
         </p>
         <div class="hero-actions">
-          <a href="#gis-sandbox" class="btn-cta">🗺️ Explore Taloja MIDC Pilot Sandbox</a>
-          <a href="#details" class="btn-secondary">Read Full Submission Form</a>
+          <a href="#prototype-scanner" class="btn-cta">🎥 Test Vision-AI Scanner</a>
+          <a href="#taloja-map" class="btn-secondary">🗺️ View Taloja GIS Map</a>
         </div>
       </div>
       <div class="hero-image-box">
@@ -59,7 +60,7 @@
   </header>
 
   <!-- Proposal Metadata Strip -->
-  <section id="overview" class="container">
+  <section class="container">
     <div style="background:var(--bg-card); border:1px solid var(--border-glow); border-radius:var(--radius-lg); padding:28px; margin:20px 0 40px;">
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
         <div>
@@ -82,8 +83,129 @@
     </div>
   </section>
 
+  <!-- LIVE PROTOTYPE VISION-AI SCANNER SECTION -->
+  <section id="prototype-scanner" class="container" style="padding-top:20px;">
+    <div class="section-header">
+      <span class="section-tag">Working Prototype Engine</span>
+      <h2 class="section-title">Live Vision-AI Scanner & Cost Engine 🎥</h2>
+      <p class="section-desc">
+        Click below to run real-time Vision-AI detection, measure pothole depth & area, and compute automated repair budgets:
+      </p>
+    </div>
+
+    <div class="prototype-container">
+      <div class="scanner-grid">
+        <!-- Scanner View -->
+        <div>
+          <div class="video-container">
+            <img src="assets/nerul_pothole_map.jpg" id="scanner-frame-img" alt="Road Scanning Feed">
+            <canvas id="vision-ai-canvas" class="video-overlay-canvas" width="640" height="360"></canvas>
+          </div>
+          
+          <div class="scanner-controls">
+            <button class="btn-cta" onclick="runVisionAIScan()">▶️ Run Vision-AI Scan</button>
+            <button class="btn-secondary" onclick="generateWorkTicket()">📄 Generate MIDC Work Order</button>
+          </div>
+          <div id="ai-scan-status" style="font-size:0.88rem; font-weight:600; color:var(--accent-cyan); margin-top:10px;">
+            Ready to scan. Click "Run Vision-AI Scan" to initiate detection.
+          </div>
+        </div>
+
+        <!-- Real-Time Math & Cost Panel -->
+        <div class="scanner-panel">
+          <span class="hero-pill" style="font-size:0.75rem; padding:3px 10px; margin-bottom:10px;">🧮 Real-Time Analytics Engine</span>
+          <h4>Pothole Diagnostics & Costs</h4>
+
+          <div class="stat-grid-2">
+            <div class="stat-box">
+              <div class="stat-label">Pothole ID</div>
+              <div class="stat-val" id="stat-id">TAL-96420</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Severity</div>
+              <div class="stat-val" id="stat-severity" style="color:var(--accent-amber);">HIGH</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Surface Area</div>
+              <div class="stat-val" id="stat-area">1.45 m²</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Pothole Depth</div>
+              <div class="stat-val" id="stat-depth">8.5 cm</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Polymer Needed</div>
+              <div class="stat-val" id="stat-mass">271 kg</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Est. Fix Duration</div>
+              <div class="stat-val" id="stat-time">2.6 Hours</div>
+            </div>
+          </div>
+
+          <table class="cost-breakdown-table">
+            <thead>
+              <tr>
+                <th>Cost Component</th>
+                <th>Estimate (INR)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rain-Proof Polymer Cold-Mix</td>
+                <td id="cost-material">₹ 17,615</td>
+              </tr>
+              <tr>
+                <td>Technician & Labor Hours</td>
+                <td id="cost-labor">₹ 1,950</td>
+              </tr>
+              <tr>
+                <td>Machinery & Roller Overhead</td>
+                <td id="cost-machinery">₹ 3,500</td>
+              </tr>
+              <tr style="font-weight:bold; border-top:1px solid var(--accent-emerald);">
+                <td style="color:var(--accent-emerald);">Total Estimated Repair Cost</td>
+                <td id="cost-total" style="color:var(--accent-emerald); font-size:1.1rem;">₹ 23,065</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="background:rgba(245, 158, 11, 0.12); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:10px; font-size:0.82rem; color:#fde68a;">
+            🌙 <strong>Recommended Dispatch:</strong> NIGHT SHIFT (11:00 PM – 4:00 AM) to prevent 40-tonne container truck gridlock in Taloja MIDC.
+          </div>
+        </div>
+      </div>
+
+      <!-- MIDC Official Work Ticket Output -->
+      <div id="ticket-result-box" style="display:none;" class="ticket-output-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h4 style="color:var(--accent-emerald); font-family:var(--font-heading);">📋 MIDC Official Maintenance Work Ticket</h4>
+          <div>
+            <button class="btn-cta" style="font-size:0.8rem; padding:6px 14px;" onclick="printWorkTicket()">🖨️ Print / Download Ticket</button>
+          </div>
+        </div>
+        <pre id="ticket-text-content" style="white-space:pre-wrap; font-family:var(--font-code); color:#e5e7eb; font-size:0.88rem;"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALOJA LEAFLET GIS MAP SECTION -->
+  <section id="taloja-map" class="container" style="padding-top:40px;">
+    <div class="section-header">
+      <span class="section-tag">Interactive GIS Map</span>
+      <h2 class="section-title">Taloja MIDC Corridor Interactive Map 🗺️</h2>
+      <p class="section-desc">
+        Real-time Leaflet GIS mapping centering on Taloja MIDC Industrial Spine Road (Sectors 1 to 24). Click markers to inspect potholes:
+      </p>
+    </div>
+
+    <div style="background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:20px;">
+      <div id="taloja-leaflet-map"></div>
+    </div>
+  </section>
+
   <!-- 5-Step Methodology Loop Section -->
-  <section id="methodology" class="container">
+  <section id="methodology" class="container" style="padding-top:40px;">
     <div class="section-header">
       <span class="section-tag">Implementation Loop</span>
       <h2 class="section-title">The 5-Stage Implementation Methodology</h2>
@@ -92,73 +214,6 @@
 
     <div id="methodology-container" class="method-loop">
       <!-- Rendered dynamically by app.js -->
-    </div>
-  </section>
-
-  <!-- GIS Prototype Sandbox Simulator -->
-  <section id="gis-sandbox" class="container" style="padding-top:40px;">
-    <div class="section-header">
-      <span class="section-tag">Interactive Simulation</span>
-      <h2 class="section-title">Taloja MIDC Pilot Interactive Sandbox 🗺️</h2>
-      <p class="section-desc">Simulating daily AI road scanning and automated work-ticket generation along Taloja MIDC Spine Road:</p>
-    </div>
-
-    <div class="sandbox-box">
-      <div class="sandbox-layout">
-        <div class="sandbox-map-frame">
-          <img src="assets/nerul_pothole_map.jpg" alt="Taloja MIDC Pothole AI Map">
-        </div>
-
-        <div class="sandbox-info-panel">
-          <span class="sandbox-badge">📍 Pilot Location: Taloja MIDC Chemical Belt (Sectors 1–24)</span>
-          <h4 style="font-family:var(--font-heading); color:#fff; font-size:1.3rem; margin-bottom:8px;">
-            Pothole #TK-96420 Automated Inspection
-          </h4>
-          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:12px;">
-            Detected via optical camera pod on MIDC fleet vehicle during routine morning transit.
-          </p>
-
-          <table class="cost-breakdown-table">
-            <thead>
-              <tr>
-                <th>Element</th>
-                <th>Estimate (INR)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Rapid Polymer Asphalt Mix</td>
-                <td>₹ 1,45,680</td>
-              </tr>
-              <tr>
-                <td>Labor & Machine Time</td>
-                <td>₹ 15,680</td>
-              </tr>
-              <tr>
-                <td>Estimated Fixing Timeline</td>
-                <td><strong>3.5 Hours</strong></td>
-              </tr>
-              <tr>
-                <td>Recommended Dispatch</td>
-                <td><span style="color:var(--accent-amber); font-weight:700;">Night Shift (11 PM - 4 AM)</span></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <button class="btn-cta" style="width:100%; text-align:center; justify-content:center;" onclick="triggerPotholeScan()">
-            ⚡ Generate Night Repair Ticket &rarr;
-          </button>
-        </div>
-      </div>
-
-      <div id="scan-result-details" style="display:none; margin-top:24px; background:rgba(16, 185, 129, 0.1); border:1px solid var(--accent-emerald); border-radius:12px; padding:20px;">
-        <h4 style="color:var(--accent-emerald); font-family:var(--font-heading); margin-bottom:6px;">
-          ✅ Work-Ticket #WT-2026-TALOJA Created Successfully!
-        </h4>
-        <p style="color:#e5e7eb; font-size:0.9rem;">
-          Geo-location pinned at Taloja Industrial Corridor (Km 4.2). Night repair squad notified. 30-minute curing cold-mix polymer reserved at Taloja MIDC estate storage.
-        </p>
-      </div>
     </div>
   </section>
 
@@ -222,19 +277,6 @@
 
     <div id="timeline-container" class="timeline-list">
       <!-- Rendered dynamically by app.js -->
-    </div>
-  </section>
-
-  <!-- Blueprint Copy Box -->
-  <section class="container" style="padding-top:40px;">
-    <div style="text-align:center; background:rgba(255,255,255,0.04); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:30px;">
-      <h3 style="font-family:var(--font-heading); color:#fff; font-size:1.4rem; margin-bottom:8px;">
-        📋 Proposal Summary Blueprint
-      </h3>
-      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:20px;">
-        Click below to copy the complete proposal summary text to your clipboard.
-      </p>
-      <button class="btn-cta" onclick="copyProposalBlueprint()">Copy Submission Blueprint &rarr;</button>
     </div>
   </section>
 
