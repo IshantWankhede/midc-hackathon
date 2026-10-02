@@ -213,6 +213,24 @@
 
     <!-- Main Map Area -->
     <main class="map-area">
+      
+      <!-- Floating Map Controls -->
+      <div class="map-controls-top">
+        <div class="search-bar">
+          <input type="text" placeholder="Search Sector or Landmark..." class="form-input">
+        </div>
+        <div class="chicklet-bar">
+          <button class="chicklet active" onclick="filterPotholes('ALL', this)">All Potholes</button>
+          <button class="chicklet" onclick="filterPotholes('CRITICAL', this)">🛑 Critical</button>
+          <button class="chicklet" onclick="filterPotholes('HIGH', this)">⚠️ High</button>
+          <button class="chicklet chicklet-report" onclick="enableReportMode()">📍 Report Pothole</button>
+        </div>
+      </div>
+      <!-- Report Pothole Toast -->
+      <div id="report-toast" class="report-toast hidden">
+        Tap anywhere on the map to drop a pin.
+      </div>
+
       <div id="taloja-gis-map"></div>
       
       <!-- Overlay Work Ticket Modal (shown via JS when generated) -->
@@ -227,6 +245,35 @@
           </div>
           <div class="modal-footer">
             <button class="btn btn-primary" onclick="printWorkTicket()">🖨️ Print Ticket</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report Pothole Modal -->
+      <div id="report-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Report New Pothole</h3>
+            <button class="btn-close" onclick="closeReportModal()">✕</button>
+          </div>
+          <div class="modal-body">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;" id="report-location-text">Location captured from map tap.</p>
+            <div class="field-group">
+              <label class="field-label">Severity</label>
+              <select id="report-severity" class="form-input">
+                <option value="MEDIUM">Medium (Bumpy)</option>
+                <option value="HIGH">High (Deep)</option>
+                <option value="CRITICAL">Critical (Axle-breaking)</option>
+              </select>
+            </div>
+            <div class="field-group" style="margin-top: 16px;">
+              <label class="field-label">Additional Comments</label>
+              <textarea id="report-comment" class="form-input" rows="2" placeholder="E.g., Near the main gate of Sector 12"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeReportModal()">Cancel</button>
+            <button class="btn btn-primary" style="margin-left:8px;" onclick="submitPotholeReport()">Submit Report</button>
           </div>
         </div>
       </div>

@@ -7,7 +7,14 @@ let potholeMarkers = [];
 const talojaPotholes = [
   { id: 'TAL-96420', location: 'Taloja MIDC Chemical Spine Road (Sector 12)', lat: 19.0685, lng: 73.0842, severity: 'HIGH', areaSqM: 1.45, depthCm: 8.5, bbox: { x: 35, y: 48, w: 32, h: 22 }, trafficType: 'Heavy 40-tonne Container Tankers' },
   { id: 'TAL-96421', location: 'Taloja Industrial Freight Corridor (Sector 18)', lat: 19.0720, lng: 73.0890, severity: 'MEDIUM', areaSqM: 0.85, depthCm: 5.0, bbox: { x: 55, y: 60, w: 25, h: 20 }, trafficType: 'Medium Goods Vehicles' },
-  { id: 'TAL-96422', location: 'Taloja MIDC Effluent Access Corridor (Sector 4)', lat: 19.0640, lng: 73.0790, severity: 'CRITICAL', areaSqM: 2.10, depthCm: 11.0, bbox: { x: 20, y: 70, w: 40, h: 22 }, trafficType: 'Heavy Chemical Carriers' }
+  { id: 'TAL-96422', location: 'Taloja MIDC Effluent Access Corridor (Sector 4)', lat: 19.0640, lng: 73.0790, severity: 'CRITICAL', areaSqM: 2.10, depthCm: 11.0, bbox: { x: 20, y: 70, w: 40, h: 22 }, trafficType: 'Heavy Chemical Carriers' },
+  { id: 'TAL-96423', location: 'Taloja MIDC Main Gate (Sector 1)', lat: 19.0620, lng: 73.0780, severity: 'HIGH', areaSqM: 1.20, depthCm: 7.0, bbox: { x: 40, y: 45, w: 20, h: 15 }, trafficType: 'Heavy Commuter & Freight' },
+  { id: 'TAL-96424', location: 'Taloja Sector 5 Internal Road', lat: 19.0650, lng: 73.0820, severity: 'MEDIUM', areaSqM: 0.60, depthCm: 3.5, bbox: { x: 50, y: 55, w: 15, h: 10 }, trafficType: 'Light Commercial Vehicles' },
+  { id: 'TAL-96425', location: 'Taloja Sector 9 Factory Zone', lat: 19.0665, lng: 73.0810, severity: 'CRITICAL', areaSqM: 2.80, depthCm: 14.5, bbox: { x: 10, y: 65, w: 50, h: 30 }, trafficType: 'Heavy Chemical Carriers' },
+  { id: 'TAL-96426', location: 'Taloja Sector 11 Crossroad', lat: 19.0675, lng: 73.0850, severity: 'MEDIUM', areaSqM: 0.90, depthCm: 4.0, bbox: { x: 30, y: 50, w: 25, h: 20 }, trafficType: 'Medium Goods Vehicles' },
+  { id: 'TAL-96427', location: 'Taloja Sector 14 Distribution Hub', lat: 19.0700, lng: 73.0830, severity: 'HIGH', areaSqM: 1.75, depthCm: 9.5, bbox: { x: 25, y: 40, w: 35, h: 25 }, trafficType: 'Heavy 40-tonne Container Tankers' },
+  { id: 'TAL-96428', location: 'Taloja Sector 20 Logistics Park', lat: 19.0740, lng: 73.0870, severity: 'CRITICAL', areaSqM: 3.10, depthCm: 16.0, bbox: { x: 15, y: 55, w: 60, h: 35 }, trafficType: 'Heavy Multi-Axle Trucks' },
+  { id: 'TAL-96429', location: 'Taloja Sector 22 Exit Route', lat: 19.0760, lng: 73.0900, severity: 'HIGH', areaSqM: 1.40, depthCm: 8.0, bbox: { x: 45, y: 60, w: 20, h: 15 }, trafficType: 'Heavy Freight' }
 ];
 
 let selectedPothole = talojaPotholes[0];
@@ -64,6 +71,9 @@ function switchTab(tabId) {
   if(pane) pane.classList.add('active');
 }
 
+let isReportMode = false;
+let pendingReportLatLng = null;
+
 // Leaflet GIS Map Setup
 function initLeafletMap() {
   const mapElem = document.getElementById('taloja-gis-map');
@@ -78,21 +88,52 @@ function initLeafletMap() {
     attribution: '© OpenStreetMap contributors'
   }).addTo(leafletMap);
 
-  const customIcon = L.divIcon({
-    className: 'custom-map-marker',
-    html: `<div class="marker-pulse"></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12]
-  });
+  renderMarkers('ALL');
 
-  talojaPotholes.forEach((p, idx) => {
+  leafletMap.on('click', function(e) {
+    if (isReportMode) {
+      pendingReportLatLng = e.latlng;
+      document.getElementById('report-modal').classList.remove('hidden');
+      document.getElementById('report-location-text').innerText = `Capturing coordinates: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+      disableReportMode();
+    }
+  });
+}
+
+window.filterPotholes = function(type, btnElem) {
+  document.querySelectorAll('.chicklet-bar .chicklet').forEach(b => b.classList.remove('active'));
+  if (btnElem) btnElem.classList.add('active');
+  renderMarkers(type);
+}
+
+function getPotholeImage(severity) {
+  if (severity === 'CRITICAL') return 'assets/pothole_critical.jpg';
+  if (severity === 'HIGH') return 'assets/pothole_high.jpg';
+  return 'assets/pothole_medium.jpg';
+}
+
+function renderMarkers(filterType = 'ALL') {
+  potholeMarkers.forEach(m => leafletMap.removeLayer(m));
+  potholeMarkers = [];
+
+  talojaPotholes.forEach((p) => {
+    if (filterType !== 'ALL' && p.severity !== filterType) return;
+
+    const customIcon = L.divIcon({
+      className: 'custom-map-marker',
+      html: `<div class="marker-pulse"></div>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12]
+    });
+
     const marker = L.marker([p.lat, p.lng], { icon: customIcon }).addTo(leafletMap);
     
     marker.bindPopup(`
       <div class="map-popup">
-        <strong>${p.id}</strong><br>
-        <span>Severity: ${p.severity}</span><br>
-        <button class="btn btn-sm btn-primary mt-2" onclick="selectPotholeFromMap(${idx})">
+        <img src="${getPotholeImage(p.severity)}" alt="Pothole Thumbnail" class="map-popup-img">
+        <strong>${p.id}</strong>
+        <span style="font-size:0.9rem; color:#aaa;">Severity: ${p.severity}</span><br>
+        <button class="btn btn-sm btn-primary mt-3" onclick="selectPotholeFromMap('${p.id}')">
           Analyze Diagnostics
         </button>
       </div>
@@ -101,11 +142,67 @@ function initLeafletMap() {
   });
 }
 
-window.selectPotholeFromMap = function(index) {
-  selectedPothole = talojaPotholes[index];
+window.selectPotholeFromMap = function(id) {
+  selectedPothole = talojaPotholes.find(x => x.id === id);
+  if (!selectedPothole) return;
+  
+  const imgElem = document.getElementById('dashcam-img');
+  if (imgElem) {
+    imgElem.src = getPotholeImage(selectedPothole.severity);
+  }
+
   updateMathEngine(selectedPothole);
   drawCanvasBoundingBox();
   switchTab('tab-diagnostics');
+}
+
+window.enableReportMode = function() {
+  isReportMode = true;
+  document.getElementById('report-toast').classList.remove('hidden');
+  document.getElementById('taloja-gis-map').classList.add('map-report-mode');
+}
+
+function disableReportMode() {
+  isReportMode = false;
+  document.getElementById('report-toast').classList.add('hidden');
+  document.getElementById('taloja-gis-map').classList.remove('map-report-mode');
+}
+
+window.closeReportModal = function() {
+  document.getElementById('report-modal').classList.add('hidden');
+}
+
+window.submitPotholeReport = function() {
+  const severity = document.getElementById('report-severity').value;
+  const newId = 'TAL-' + Math.floor(10000 + Math.random() * 90000);
+  
+  // Approximate values based on severity
+  let area = 1.0, depth = 5.0;
+  if (severity === 'CRITICAL') { area = 2.5; depth = 12.0; }
+  else if (severity === 'HIGH') { area = 1.5; depth = 8.0; }
+  else if (severity === 'MEDIUM') { area = 0.8; depth = 4.0; }
+
+  const newPothole = {
+    id: newId,
+    location: 'User Reported Location',
+    lat: pendingReportLatLng.lat,
+    lng: pendingReportLatLng.lng,
+    severity: severity,
+    areaSqM: area,
+    depthCm: depth,
+    bbox: { x: 35, y: 50, w: 30, h: 20 },
+    trafficType: 'Unknown (Community Report)'
+  };
+
+  talojaPotholes.push(newPothole);
+  renderMarkers('ALL');
+  
+  // Reset active filter button to ALL
+  document.querySelectorAll('.chicklet-bar .chicklet').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.chicklet-bar .chicklet')[0].classList.add('active');
+
+  closeReportModal();
+  selectPotholeFromMap(newId);
 }
 
 // Math Engine
@@ -177,7 +274,7 @@ window.runVisionAIScan = function() {
         btn.disabled = false;
         
         setTimeout(() => {
-            selectPotholeFromMap(talojaPotholes.indexOf(selectedPothole));
+            selectPotholeFromMap(selectedPothole.id);
         }, 2000);
       }, 400);
     }
