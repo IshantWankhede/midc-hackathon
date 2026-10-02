@@ -590,3 +590,55 @@ body {
   border-top: 1px solid var(--border-color);
   display: flex; justify-content: flex-end;
 }
+
+/* 📱 Mobile Responsiveness */
+@media (max-width: 768px) {
+  /* 50/50 Split Screen Layout */
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex: 1; /* Takes bottom half */
+    border-right: none;
+    border-top: 1px solid var(--border-color);
+    order: 2; /* Places sidebar below map */
+  }
+  .map-area {
+    flex: 1; /* Takes top half */
+    order: 1; /* Places map above sidebar */
+    min-height: 45vh;
+  }
+  
+  /* Navbar & Splash screen tweaks */
+  .nav-metrics {
+    display: none; /* Free up header space */
+  }
+  .splash-banner h1 {
+    font-size: 2rem;
+  }
+  
+  /* Map Controls (Chicklets) */
+  .map-controls-top {
+    width: 95%;
+    top: 10px;
+  }
+  .chicklet-bar {
+    padding-bottom: 8px; /* Easier touch scrolling */
+  }
+  .chicklet {
+    padding: 8px 12px; 
+    font-size: 0.75rem;
+  }
+  
+  /* Modals */
+  .modal-content {
+    width: 95%;
+    margin: 0 auto;
+  }
+  
+  /* Touch-friendly buttons */
+  .btn {
+    padding: 12px 20px;
+  }
+}
