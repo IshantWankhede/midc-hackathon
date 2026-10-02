@@ -270,6 +270,11 @@
               <label class="field-label">Additional Comments</label>
               <textarea id="report-comment" class="form-input" rows="2" placeholder="E.g., Near the main gate of Sector 12"></textarea>
             </div>
+            <div class="field-group" style="margin-top: 16px;">
+              <label class="field-label">Upload Photo 📸</label>
+              <input type="file" id="report-photo" accept="image/*" class="form-input" style="padding: 8px; cursor: pointer;">
+              <img id="report-photo-preview" src="" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-top: 12px; display: none; border: 1px solid rgba(255,255,255,0.15);">
+            </div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" onclick="closeReportModal()">Cancel</button>

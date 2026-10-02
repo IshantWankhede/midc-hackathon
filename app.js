@@ -106,9 +106,10 @@ window.filterPotholes = function(type, btnElem) {
   renderMarkers(type);
 }
 
-function getPotholeImage(severity) {
-  if (severity === 'CRITICAL') return 'assets/pothole_critical.jpg';
-  if (severity === 'HIGH') return 'assets/pothole_high.jpg';
+function getPotholeImage(p) {
+  if (p.customImage) return p.customImage;
+  if (p.severity === 'CRITICAL') return 'assets/pothole_critical.jpg';
+  if (p.severity === 'HIGH') return 'assets/pothole_high.jpg';
   return 'assets/pothole_medium.jpg';
 }
 
@@ -130,7 +131,7 @@ function renderMarkers(filterType = 'ALL') {
     
     marker.bindPopup(`
       <div class="map-popup">
-        <img src="${getPotholeImage(p.severity)}" alt="Pothole Thumbnail" class="map-popup-img">
+        <img src="${getPotholeImage(p)}" alt="Pothole Thumbnail" class="map-popup-img">
         <strong>${p.id}</strong>
         <span style="font-size:0.9rem; color:#aaa;">Severity: ${p.severity}</span><br>
         <button class="btn btn-sm btn-primary mt-3" onclick="selectPotholeFromMap('${p.id}')">
@@ -148,7 +149,7 @@ window.selectPotholeFromMap = function(id) {
   
   const imgElem = document.getElementById('dashcam-img');
   if (imgElem) {
-    imgElem.src = getPotholeImage(selectedPothole.severity);
+    imgElem.src = getPotholeImage(selectedPothole);
   }
 
   updateMathEngine(selectedPothole);
@@ -168,12 +169,41 @@ function disableReportMode() {
   document.getElementById('taloja-gis-map').classList.remove('map-report-mode');
 }
 
+let uploadedImageBase64 = null;
+
+// Photo Upload Handler
+document.addEventListener('DOMContentLoaded', () => {
+  const photoInput = document.getElementById('report-photo');
+  const photoPreview = document.getElementById('report-photo-preview');
+  
+  if (photoInput) {
+    photoInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        uploadedImageBase64 = event.target.result;
+        photoPreview.src = uploadedImageBase64;
+        photoPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+});
+
 window.closeReportModal = function() {
   document.getElementById('report-modal').classList.add('hidden');
+  // Reset form
+  document.getElementById('report-photo').value = '';
+  document.getElementById('report-photo-preview').style.display = 'none';
+  document.getElementById('report-comment').value = '';
+  uploadedImageBase64 = null;
 }
 
 window.submitPotholeReport = function() {
   const severity = document.getElementById('report-severity').value;
+  const comment = document.getElementById('report-comment').value;
   const newId = 'TAL-' + Math.floor(10000 + Math.random() * 90000);
   
   // Approximate values based on severity
@@ -191,7 +221,9 @@ window.submitPotholeReport = function() {
     areaSqM: area,
     depthCm: depth,
     bbox: { x: 35, y: 50, w: 30, h: 20 },
-    trafficType: 'Unknown (Community Report)'
+    trafficType: 'Unknown (Community Report)',
+    customImage: uploadedImageBase64,
+    comment: comment
   };
 
   talojaPotholes.push(newPothole);
